@@ -17,36 +17,41 @@ int main(string[] args) {
   int result = core.sys.posix.sys.utsname.uname(&info);
 
   if (result == 0) {
-    if (args.length == 1) {
-      args = ["", "-s"];
-    } else if (args.canFind("-a")) {
-      args = ["", "-s", "-n", "-r", "-v", "-m"];
-    }
+    // Handle cases for no arguments and for -a argument.
+    if (args.length == 1) args = ["", "-s"];
+    if (args.canFind("-a")) args = ["", "-s", "-n", "-r", "-v", "-m"];
 
     foreach (idx, arg; args[1..$]) {
       switch (arg) {
+
       default:
-	stdout.write("unknown argument: ", arg);
-	return 1;
-      case "-o":
-      case "-s":
-	stdout.write(info.sysname);
-	break;
+        stdout.writeln("unknown argument: ", arg);
+        return 1;
+
+      case "-o", "-s":
+        stdout.write(info.sysname);
+        break;
+
       case "-n":
-	stdout.write(info.nodename);
-	break;
+        stdout.write(info.nodename);
+        break;
+
       case "-r":
-	stdout.write(info.release);
-	break;
+        stdout.write(info.release);
+        break;
+
       case "-v":
-	stdout.write(info.version_);
-	break;
+        stdout.write(info.version_);
+        break;
+
       case "-m":
-	stdout.write(info.machine);
-	break;
+        stdout.write(info.machine);
+        break;
+            
       }
+
       if (idx != args.length - 2) {
-	stdout.write(" ");
+        stdout.write(" ");
       }
     }
   } else {

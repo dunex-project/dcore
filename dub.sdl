@@ -25,7 +25,16 @@ dependency "dcore:tsort" version="*"
 dependency "dcore:cut" version="*"
 dependency "dcore:seq" version="*"
 dependency "dcore:sleep" version="*"
+dependency "dcore:su" version="*"
 dependency "dcore:factor" version="*"
+
+// Utility libraries
+subPackage {
+    name "shadow"
+    targetName "shadow"
+    targetType "library"
+    sourcePaths "src/shadow"
+}
 
 // WIP
 subPackage {
@@ -59,6 +68,30 @@ subPackage {
     targetType "executable"
     sourcePaths "src/wc"
 }
+
+subPackage {
+    name "su"
+    targetName "su"
+    targetPath "out/"
+    targetType "executable"
+    sourcePaths "src/su"
+    libs "crypt"
+    configuration "application" {
+        platforms "linux"
+        versions "USE_SHADOW"
+        sourcePaths "src/shadow"
+    }
+    configuration "application" {
+        platforms "posix"
+    }
+    configuration "force_shadow" {
+        versions "USE_SHADOW"
+        sourcePaths "src/shadow"
+    }
+}
+
+
+
 
 // Done(-ish)
 subPackage {

@@ -35,6 +35,7 @@ Fun.
 * cksum (doesn't work - algorithm isn't standard and implementation isn't correct).
 * wc (-c and -l work, of course, but the -L and -w counts are different from GNU version for unknown reasons).
 * deesh (this is a big ol project in itself)
+* su (Clipsey is doing that)
 * factor (works for up to ulong length things but is a naive implementation that is slower than good implementations)
 
 ## Todo ##
@@ -75,7 +76,6 @@ Fun.
 * hostname
 * date
 * pwd
-* su
 * nice
 * who
 * id
