@@ -3,10 +3,6 @@
 
   Written by: chaomodus
   2019-10-19T20:29:40
-
-  Bugs:
-    Word count seems to be different from how GNU util counts words.
-    Max-line-length seems to be different from GNU util.
 */
 
 import std.getopt;
@@ -30,15 +26,17 @@ struct FileStats {
     while (!this.file.eof) {
       auto line = this.file.readln();
 
-      if (line.length > this.max_line_length) {
-	this.max_line_length = line.length;
+      // ignore trailing newlineage
+      auto line_length = line.length - line.canFind('\n') - line.canFind('\r');
+      if (line_length > this.max_line_length) {
+	this.max_line_length = line_length;
       }
+
       if (line.canFind("\n") || line.canFind("\r")) {
 	this.line_count += 1;
       }
       this.char_count += line.length;
-      string[] words = line.split(whitespace_regex);
-      this.word_count += words.length;
+      this.word_count += line.strip.split(whitespace_regex).length;
     }
   }
 };
@@ -50,6 +48,7 @@ int main(string[] args) {
   auto helpInformation = getopt(args,
 				std.getopt.config.passThrough,
 				std.getopt.config.bundling,
+				std.getopt.config.caseSensitive,
 				"c|chars|m|bytes", "Show the character/byte count.", &seen_chars,
 				"l|lines", "Show the line count.", &seen_lines,
 				"w|words", "Show the word count.", &seen_words,
@@ -85,7 +84,6 @@ int main(string[] args) {
   } else {
     fs = new FileStats;
     fs.file = stdin;
-    fs.fname = "-";
     files ~= fs;
   }
 
@@ -108,10 +106,12 @@ int main(string[] args) {
     if (show_chars)
       output ~= to!string(f.char_count);
 
-    if (show_words)
-      output ~= to!string(f.word_count);
+    if (show_line_lengths)
+      output ~= to!string(f.max_line_length);
 
-    output ~= f.fname;
+    if (f.fname)
+        output ~= f.fname;
+
     writeln(join(output, " "));
   }
 
