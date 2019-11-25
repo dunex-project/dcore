@@ -6,6 +6,7 @@ copyright "Copyright © 2019, Cas Rusnov and contributors"
 targetType "none"
 targetPath "out/"
 
+dependency "dcore:cat" version="*"
 dependency "dcore:deesh" version="*"
 dependency "dcore:mkdir" version="*"
 dependency "dcore:cksum" version="*"
@@ -220,4 +221,12 @@ subPackage {
     targetPath "out/"
     targetType "executable"
     sourcePaths "src/wc"
+}
+
+subPackage {
+    name "cat"
+    targetName "cat"
+    targetPath "out/"
+    targetType "executable"
+    sourcePaths "src/cat"
 }

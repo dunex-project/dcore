@@ -29,6 +29,7 @@ Fun.
 * seq
 * sleep
 * wc
+* cat
 
 ## WIP ##
 
@@ -56,7 +57,6 @@ Fun.
 * df
 * du
 * chroot
-* cat
 * head
 * tail
 * sort
