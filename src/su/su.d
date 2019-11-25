@@ -27,11 +27,10 @@ import core.memory : GC;
 import std.file : exists;
 
 // Only import shadow files if shadow files are used
+// enable shadow on linux
+version (linux) version = USE_SHADOW;
 version(USE_SHADOW) {
-    enum CAP_HAS_SHADOW = "yes";
     import shadow;
-} else {
-    enum CAP_HAS_SHADOW = "no";
 }
 
 /**
@@ -159,7 +158,10 @@ int main(string[] args) {
     Builds the version text with capabilities listed
 */
 string buildVersionText() {
-    return "%s (shadow_file=%s)".format(SU_VERSION, CAP_HAS_SHADOW);
+    version (USE_SHADOW)
+        return SU_VERSION ~ " (with shadow support)";
+    else
+        return SU_VERSION;
 }
 
 /**
