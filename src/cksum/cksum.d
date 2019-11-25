@@ -54,8 +54,8 @@ int main(string[] args) {
     // using the minimum number of bytes.
     ubyte[8] lengthArray = cast(ubyte[8])nativeToLittleEndian(length);
     // trim length to minimum number of bytes
-    int lastidx = lengthArray.length - 1;
-    foreach_reverse(int i, j; lengthArray) {
+    size_t lastidx = lengthArray.length - 1;
+    foreach_reverse(i, j; lengthArray) {
       if (j == 0) {
 	lastidx = i;
       }	else {
