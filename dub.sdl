@@ -67,19 +67,8 @@ subPackage {
     targetPath "out/"
     targetType "executable"
     sourcePaths "src/su"
+    sourcePaths "src/shadow"
     libs "crypt"
-    configuration "application" {
-        platforms "linux"
-        versions "USE_SHADOW"
-        sourcePaths "src/shadow"
-    }
-    configuration "application" {
-        platforms "posix"
-    }
-    configuration "force_shadow" {
-        versions "USE_SHADOW"
-        sourcePaths "src/shadow"
-    }
 }
 
 
